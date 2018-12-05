@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <main class="home">
+    <Map v-if="accessToken"/>
+  </main>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import { mapState } from "vuex";
+import Map from "@/components/Map.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    Map
+  },
+  computed: {
+    ...mapState({
+      accessToken: state => state.map.accessToken
+    })
   }
 };
 </script>
