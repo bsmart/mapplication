@@ -13,7 +13,10 @@ module.exports = {
     plugins: [
       new PurgecssPlugin({
         // Specify the locations of any files you want to scan for class names.
-        paths: glob.sync([path.join(__dirname, "src/**/*.*")]),
+        paths: glob.sync([
+          path.join(__dirname, "src/**/*.vue"),
+          path.join(__dirname, "src/**/*.js")
+        ]),
         extractors: [
           {
             extractor: TailwindExtractor,

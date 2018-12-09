@@ -1,38 +1,23 @@
 <template>
-  <div id="map"></div>
+  <section id="map" class="z-0 h-full"></section>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import mapboxgl from "mapbox-gl";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Map",
   components: {},
   mounted() {
-    mapboxgl.accessToken = this.accessToken;
-    new mapboxgl.Map({
-      container: this.$el,
-      style: "mapbox://styles/mapbox/streets-v10",
-      center: [-122.6587, 45.5122],
-      zoom: 8
-    });
+    this.createMap(this.$el);
   },
   computed: {
-    ...mapState({
-      accessToken: state => state.map.accessToken
-    })
+    ...mapGetters("map", ["createMap"])
   },
   methods: {}
 };
 </script>
 
 <style>
-@import url("https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css");
-#map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}
+@import url("//api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css");
 </style>

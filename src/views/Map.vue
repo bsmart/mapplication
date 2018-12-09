@@ -1,18 +1,7 @@
 <template>
-  <main id="main" class="relative">
-    <Map v-if="accessToken"/>
-    <section v-else class="container mx-auto mt-4">
-      <label for="accessToken">Access token</label>
-      <input
-        id="accessToken"
-        type="text"
-        class="w-full border-2 rounded px-3 py-2"
-        placeholder="Enter your Mapbox access token..."
-        v-model="tokenValue"
-        @keypress.enter.prevent.stop="setAccessToken(tokenValue)"
-      >
-    </section>
-  </main>
+  <div class="absolute pin w-screen h-full">
+    <Map/>
+  </div>
 </template>
 
 <script>
@@ -45,8 +34,4 @@ export default {
 </script>
 
 <style lang="scss">
-#main {
-  height: 95vh;
-}
 </style>
-
