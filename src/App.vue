@@ -1,10 +1,23 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="app" class="relative h-screen text-xl">
+    <nav
+      id="nav"
+      class="absolute pin-x pin-t h-16 z-10 flex items-center justify-center py-2 bg-grey-light text-body border-b border-grey-darkest"
+    >
+      <router-link
+        class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
+        to="/map"
+        exact-active-class="bg-black text-white rounded"
+      >Map</router-link>
+      <router-link
+        class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
+        to="/settings"
+        active-class="bg-black text-white rounded"
+      >Settings</router-link>
+    </nav>
+    <main class="relative pt-16 h-full">
+      <router-view/>
+    </main>
   </div>
 </template>
 
