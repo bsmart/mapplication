@@ -7,8 +7,13 @@
       <router-link
         class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
         to="/map"
-        exact-active-class="bg-black text-white rounded"
+        active-class="bg-black text-white rounded"
       >Map</router-link>
+      <router-link
+        class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
+        to="/layers"
+        active-class="bg-black text-white rounded"
+      >Layers</router-link>
       <router-link
         class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
         to="/settings"
@@ -44,6 +49,10 @@
  */
 @tailwind components;
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
 /**
  * Here you would add any of your custom component classes; stuff that you'd
  * want loaded *before* the utilities so that the utilities could still
