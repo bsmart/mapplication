@@ -9,7 +9,11 @@ export default {
   state: {
     layers: []
   },
-  getters: {},
+  getters: {
+    layers: state => {
+      return state.layers;
+    }
+  },
   mutations: {
     addLayer(state, { layer }) {
       state.layers.push(layer);

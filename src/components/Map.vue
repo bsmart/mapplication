@@ -9,10 +9,24 @@ export default {
   name: "Map",
   components: {},
   mounted() {
-    this.createMap(this.$el);
+    let map = this.createMap(this.$el);
+    let layers = this.layers;
+    map.on("load", function() {
+      layers.forEach(layer => {
+        map.addLayer({
+          id: layer.id.toString(),
+          type: "line",
+          source: {
+            type: "geojson",
+            data: layer.data
+          }
+        });
+      });
+    });
   },
   computed: {
-    ...mapGetters("map", ["createMap"])
+    ...mapGetters("map", ["createMap"]),
+    ...mapGetters("data", ["layers"])
   },
   methods: {}
 };

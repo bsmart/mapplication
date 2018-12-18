@@ -26,7 +26,6 @@ export default {
         return;
       }
       let reader = new FileReader();
-
       reader.onload = e => {
         var contents = e.target.result;
         this.$emit("input", contents);
