@@ -14,6 +14,11 @@
         to="/settings"
         active-class="bg-black text-white rounded"
       >Settings</router-link>
+      <router-link
+        class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
+        to="/sources"
+        exact-active-class="bg-black text-white rounded"
+      >Sources</router-link>
     </nav>
     <main class="relative pt-16 h-full">
       <router-view/>
