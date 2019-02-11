@@ -22,7 +22,7 @@
     </table>
     <div class="self-center flex items-center">
       <button
-        class="p-2 bg-fog-light hover:bg-fog-darker text-fog-darkest border rounded border-fog-dark"
+        class="p-2 bg-fog-light hover:bg-fog text-fog-darkest border rounded border-fog-dark"
         @click="previousPage"
         :disabled="pageNumber==0"
       >
@@ -30,9 +30,9 @@
       </button>
       <span class="mx-2">Page {{ pageNumber + 1 }} of {{ pageCount }}</span>
       <button
-        class="p-2 bg-fog-light hover:bg-fog-darker text-fog-darkest border rounded border-fog-dark"
+        class="p-2 bg-fog-light hover:bg-fog text-fog-darkest border rounded border-fog-dark"
         @click="nextPage"
-        :disabled="pageNumber >= pageCount -1"
+        :disabled="pageNumber >= pageCount - 1"
       >
         <i class="flex" v-html="chevronRight"></i>
       </button>
