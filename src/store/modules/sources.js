@@ -1,4 +1,4 @@
-import Source from "@/components/source/model";
+import Source from "@/components/sources/model";
 
 export default {
   namespaced: true,
@@ -20,21 +20,36 @@ export default {
   actions: {
     newSource({ commit }) {
       let source = new Source();
-      commit("setSource", { key: source.name, source });
+      commit("addSource", { source });
+    },
+    selectSource({ commit }, { key }) {
+      commit("setCurrentSource", { key });
     },
     saveSource({ commit }, { key, source }) {
       commit("setSource", { key, source });
     },
-    deleteSource({ commit }, { name }) {
-      commit("deleteSource", { name });
+    saveData({ commit, state }, data) {
+      var source = state.list[state.currentSource];
+      source.data = data;
+      commit("setSource", { key: state.currentSource, source });
+    },
+    deleteSource({ commit }, { key }) {
+      commit("deleteSource", { key });
     }
   },
   mutations: {
-    setSource(state, { key, source }) {
-      state[key] = source;
+    addSource(state, { source }) {
+      state.list.push(source);
     },
-    deleteSource(state, { name }) {
-      delete state[name];
+    setCurrentSource(state, { key }) {
+      state.currentSource = key;
+    },
+    setSource(state, { key, source }) {
+      state.list[key] = source;
+    },
+    deleteSource(state, { key }) {
+      state.list.splice(key, 1);
+      state.currentSource = null;
     }
   }
 };
