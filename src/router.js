@@ -3,6 +3,7 @@ import Router from "vue-router";
 
 import store from "./store";
 import Map from "./views/Map.vue";
+import Sources from "./views/Sources.vue";
 
 Vue.use(Router);
 
@@ -27,6 +28,11 @@ export default new Router({
       name: "map",
       component: Map,
       beforeEnter: requireAccessToken
+    },
+    {
+      path: "/sources",
+      name: "sources",
+      component: Sources
     },
     {
       path: "/settings",

@@ -3,23 +3,25 @@ import mapboxgl from "mapbox-gl";
 export default {
   namespaced: true,
   state: {
-    map: {},
+    map: null,
     accessToken: "",
     style: "mapbox://styles/mapbox/bright-v9",
     center: [-122.6587, 45.5122],
     zoom: 10
   },
-  getters: {
-    createMap: state => element => {
-      return new mapboxgl.Map({
-        container: element,
-        style: state.style,
-        center: state.center,
-        zoom: state.zoom
-      });
-    }
-  },
+  getters: {},
   actions: {
+    createMap({ commit, state }, element) {
+      commit(
+        "setMap",
+        new mapboxgl.Map({
+          container: element.$el,
+          style: state.style,
+          center: state.center,
+          zoom: state.zoom
+        })
+      );
+    },
     setAccessToken({ commit }, accessToken) {
       commit("setAccessToken", { accessToken });
     },

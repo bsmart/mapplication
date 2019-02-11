@@ -3,16 +3,35 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "Map",
   components: {},
   mounted() {
-    this.createMap(this.$el);
+    let map = this.createMap(this.$el);
+    map.on("load", () => {
+      this.layers()
+        .reverse()
+        .forEach(layer => {
+          map.addLayer({
+            id: layer.id.toString(),
+            type: layer.type,
+            source: {
+              type: "geojson",
+              data: layer.data
+            },
+            paint: {
+              "fill-color": layer.paint.color,
+              "fill-antialias": true,
+              "fill-opacity": 0.5
+            }
+          });
+        });
+    });
   },
   computed: {
-    ...mapGetters("map", ["createMap"])
+    ...mapActions("map", ["createMap"])
   },
   methods: {}
 };
