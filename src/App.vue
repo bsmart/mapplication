@@ -2,22 +2,22 @@
   <div id="app" class="relative h-screen text-xl">
     <nav
       id="nav"
-      class="absolute pin-x pin-t h-16 z-10 flex items-center justify-center py-2 bg-grey-light text-body border-b border-grey-darkest"
+      class="absolute pin-x pin-t h-16 z-10 flex items-center justify-center py-2 bg-fog-lighter text-body shadow"
     >
       <router-link
-        class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
+        class="text-black no-underline mx-3 rounded hover:bg-black hover:text-white p-2"
         to="/map"
-        exact-active-class="bg-black text-white rounded"
+        exact-active-class="bg-black text-white"
       >Map</router-link>
       <router-link
-        class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
+        class="text-black no-underline mx-3 rounded hover:bg-black hover:text-white p-2"
         to="/settings"
-        active-class="bg-black text-white rounded"
+        active-class="bg-black text-white"
       >Settings</router-link>
       <router-link
-        class="text-black no-underline border-black border-b-2 mx-3 hover:bg-black hover:text-white hover:rounded p-2"
+        class="text-black no-underline mx-3 rounded hover:bg-black hover:text-white p-2"
         to="/sources"
-        exact-active-class="bg-black text-white rounded"
+        exact-active-class="bg-black text-white"
       >Sources</router-link>
     </nav>
     <main class="relative pt-16 h-full">
