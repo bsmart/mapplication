@@ -1,12 +1,12 @@
 <template>
-  <div :class="{ 'text-red': required }">
+  <div class="my-3" :class="{ 'text-red': required }">
     <label class="block mb-1 font-semibold" :for="id">
       <input
         type="checkbox"
         :id="id"
         :name="id"
         :required="required ? true : false"
-        :value="value"
+        :checked="value"
         @input="handleInput"
       >
       {{ title }}

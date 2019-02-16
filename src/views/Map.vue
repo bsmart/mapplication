@@ -1,6 +1,7 @@
 <template>
   <div class="absolute pin w-screen h-full">
     <Map/>
+    <Deck/>
   </div>
 </template>
 
@@ -8,16 +9,13 @@
 // @ is an alias to /src
 import { mapState, mapActions } from "vuex";
 import Map from "@/components/Map.vue";
+import Deck from "@/components/Deck.vue";
 
 export default {
   name: "home",
   components: {
-    Map
-  },
-  data() {
-    return {
-      tokenValue: ""
-    };
+    Map,
+    Deck
   },
   computed: {
     ...mapState({
@@ -25,9 +23,6 @@ export default {
     })
   },
   methods: {
-    update() {
-      this.setAccessToken(this.tokenValue);
-    },
     ...mapActions("map", ["setAccessToken"])
   }
 };

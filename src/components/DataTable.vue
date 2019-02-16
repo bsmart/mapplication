@@ -4,7 +4,7 @@
       <thead>
         <tr class="border-b border-x">
           <th
-            class="uppercase font-semibold p-2"
+            class="font-semibold p-2"
             v-for="(property, index) in properties"
             :key="index"
           >{{ property }}</th>
@@ -16,14 +16,14 @@
             class="border p-2"
             v-for="(property, propertyIndex) in properties"
             :key="propertyIndex"
-          >{{ item.properties[property] }}</td>
+          >{{ item.properties ? item.properties[property] : item[property] }}</td>
         </tr>
       </tbody>
     </table>
     <div class="self-center flex items-center">
       <button
         class="p-2 bg-fog-light hover:bg-fog text-fog-darkest border rounded border-fog-dark"
-        @click="previousPage"
+        @click.prevent="previousPage"
         :disabled="pageNumber==0"
       >
         <i class="flex" v-html="chevronLeft"></i>
@@ -31,7 +31,7 @@
       <span class="mx-2">Page {{ pageNumber + 1 }} of {{ pageCount }}</span>
       <button
         class="p-2 bg-fog-light hover:bg-fog text-fog-darkest border rounded border-fog-dark"
-        @click="nextPage"
+        @click.prevent="nextPage"
         :disabled="pageNumber >= pageCount - 1"
       >
         <i class="flex" v-html="chevronRight"></i>
@@ -69,10 +69,10 @@ export default {
       get() {
         let properties = [];
         if (this.tableData) {
-          for (const key in this.tableData[0].properties) {
-            if (this.tableData[0].properties.hasOwnProperty(key)) {
-              properties.push(key);
-            }
+          for (const key in this.tableData[0].properties
+            ? this.tableData[0].properties
+            : this.tableData[0]) {
+            properties.push(key);
           }
         }
         return properties;
