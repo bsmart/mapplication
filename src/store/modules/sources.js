@@ -3,6 +3,7 @@ import Source from "@/components/sources/model";
 export default {
   namespaced: true,
   state: {
+    dataString: "",
     currentSource: 0,
     list: []
   },
@@ -10,11 +11,16 @@ export default {
     sources: state => {
       return state.list;
     },
-    getSource: state => key => {
-      return state ? state.list[key] : null;
+    getSource: state => id => {
+      return state.list.find(val => {
+        return val.id == id;
+      });
     },
     currentSource: state => {
       return state.list[state.currentSource];
+    },
+    map: state => map => {
+      return state.list.map(map);
     }
   },
   actions: {
@@ -26,12 +32,33 @@ export default {
       commit("setCurrentSource", { key });
     },
     saveSource({ commit }, { key, source }) {
-      commit("setSource", { key, source });
+      return new Promise((resolve, reject) => {
+        try {
+          commit("setSource", { key, source });
+          resolve();
+        } catch {
+          reject();
+        }
+      });
     },
-    saveData({ commit, state }, data) {
-      var source = state.list[state.currentSource];
-      source.data = data;
-      commit("setSource", { key: state.currentSource, source });
+    saveData({ commit }, data) {
+      commit("setData", { data });
+    },
+    addDataChunk({ commit }, chunk) {
+      commit("addDataChunk", { chunk });
+    },
+    parseData({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        try {
+          const json = JSON.parse(state.dataString);
+          commit("setData", {
+            data: json
+          });
+          resolve();
+        } catch (err) {
+          reject(null);
+        }
+      });
     },
     deleteSource({ commit }, { key }) {
       commit("deleteSource", { key });
@@ -46,6 +73,13 @@ export default {
     },
     setSource(state, { key, source }) {
       state.list[key] = source;
+    },
+    setData(state, { data }) {
+      state.dataString = "";
+      state.list[state.currentSource].data = data;
+    },
+    addDataChunk(state, { chunk }) {
+      state.dataString += chunk;
     },
     deleteSource(state, { key }) {
       state.list.splice(key, 1);

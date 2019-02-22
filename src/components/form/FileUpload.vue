@@ -22,22 +22,45 @@ export default {
   methods: {
     handleInput(e) {
       let file = e.target.files[0];
+
       if (!file) {
         return;
       }
+
+      var offset = 0;
+      const CHUNK_SIZE = 10 * 1024;
+
       let reader = new FileReader();
-      reader.onload = e => {
-        var contents = e.target.result;
-        this.$emit("input", contents);
+
+      function uintToString(arr) {
+        arr = new Int8Array(arr);
+        var encodedString = String.fromCharCode.apply(null, arr);
+        arr = null;
+        return encodedString;
+      }
+
+      reader.onload = () => {
+        if (reader.error == null) {
+          offset += reader.result.length;
+          this.$emit("chunk", reader.result);
+        } else {
+          this.$emit("error", reader.error);
+          return;
+        }
+        if (offset >= file.size) {
+          this.$emit("done");
+          return;
+        }
+
+        readChunk(offset, CHUNK_SIZE, file);
       };
 
-      switch (file.type) {
-        case "application/json":
-          reader.readAsText(file);
-          break;
-        default:
-          reader.readAsBinaryString(file);
-      }
+      var readChunk = (_offset, length, _file) => {
+        var blob = _file.slice(offset, length + _offset);
+        reader.readAsText(blob);
+      };
+
+      readChunk(offset, CHUNK_SIZE, file);
     }
   }
 };

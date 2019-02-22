@@ -33,31 +33,47 @@
         v-model="centerLat"
       ></Textfield>
     </section>
-    <Textfield
-      title="Zoom"
+    <Range title="Zoom" class="mb-3" id="zoom" v-model="zoomValue" :min="0" :max="16" :step="1"/>
+    <Range
+      title="Bearing"
       class="mb-3"
-      id="zoom"
-      placeholder="Enter a Mapbox style url..."
-      v-model="zoomValue"
-    ></Textfield>
+      id="bearing"
+      v-model="bearingValue"
+      :min="-180"
+      :max="180"
+      :step="1"
+    />
+    <Range
+      title="Pitch"
+      class="mb-3"
+      id="pitch"
+      v-model="pitchValue"
+      :min="-90"
+      :max="90"
+      :step="1"
+    />
   </form>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 import Textfield from "@/components/form/Textfield.vue";
+import Range from "@/components/form/Range.vue";
 
 export default {
   name: "settings",
   components: {
-    Textfield
+    Textfield,
+    Range
   },
   computed: {
     ...mapState({
       accessToken: state => state.map.accessToken,
       style: state => state.map.style,
       center: state => state.map.center,
-      zoom: state => state.map.zoom
+      zoom: state => state.map.zoom,
+      bearing: state => state.map.bearing,
+      pitch: state => state.map.pitch
     }),
     tokenValue: {
       get() {
@@ -98,10 +114,33 @@ export default {
       set(value) {
         this.setZoom(value);
       }
+    },
+    bearingValue: {
+      get() {
+        return this.bearing;
+      },
+      set(value) {
+        this.setBearing(value);
+      }
+    },
+    pitchValue: {
+      get() {
+        return this.pitch;
+      },
+      set(value) {
+        this.setPitch(value);
+      }
     }
   },
   methods: {
-    ...mapActions("map", ["setAccessToken", "setStyle", "setCenter", "setZoom"])
+    ...mapActions("map", [
+      "setAccessToken",
+      "setStyle",
+      "setCenter",
+      "setZoom",
+      "setBearing",
+      "setPitch"
+    ])
   }
 };
 </script>

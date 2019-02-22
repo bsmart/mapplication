@@ -4,6 +4,7 @@ import Router from "vue-router";
 import store from "./store";
 import Map from "./views/Map.vue";
 import Sources from "./views/Sources.vue";
+import Layers from "./views/Layers.vue";
 
 Vue.use(Router);
 
@@ -33,6 +34,11 @@ export default new Router({
       path: "/sources",
       name: "sources",
       component: Sources
+    },
+    {
+      path: "/layers",
+      name: "layers",
+      component: Layers
     },
     {
       path: "/settings",

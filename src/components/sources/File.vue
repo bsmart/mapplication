@@ -7,7 +7,8 @@
       placeholder="Choose a file to load data from..."
       required="true"
       :value="file"
-      @input="addData"
+      @chunk="addChunk"
+      @done="parseData"
     ></FileUpload>
   </div>
 </template>
@@ -28,10 +29,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions("sources", ["saveData"]),
+    ...mapActions("sources", ["addDataChunk", "parseData", "saveData"]),
     addData(contents) {
       var data = JSON.parse(contents);
       this.saveData(data);
+    },
+    addChunk(chunk) {
+      this.addDataChunk(chunk);
     }
   }
 };

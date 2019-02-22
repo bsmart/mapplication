@@ -1,8 +1,8 @@
 <template>
-  <div id="app" class="relative h-screen text-xl">
+  <div id="app" class="relative h-screen text-xl font-sans">
     <nav
       id="nav"
-      class="absolute pin-x pin-t h-16 z-10 flex items-center justify-center py-2 bg-fog-lighter text-body shadow"
+      class="absolute pin-x pin-t h-16 z-20 flex items-center justify-center py-2 bg-fog-lighter text-body shadow"
     >
       <router-link
         class="text-black no-underline mx-3 rounded hover:bg-black hover:text-white p-2"
@@ -19,6 +19,11 @@
         to="/sources"
         exact-active-class="bg-black text-white"
       >Sources</router-link>
+      <router-link
+        class="text-black no-underline mx-3 rounded hover:bg-black hover:text-white p-2"
+        to="/layers"
+        exact-active-class="bg-black text-white"
+      >Layers</router-link>
     </nav>
     <main class="relative pt-16 h-full">
       <router-view/>
@@ -27,6 +32,9 @@
 </template>
 
 <style lang="scss">
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,800");
+
 /**
  * This injects Tailwind's base styles, which is a combination of
  * Normalize.css and some additional base styles.

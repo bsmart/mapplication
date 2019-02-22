@@ -87,12 +87,12 @@ export default {
             if (val && val.name) {
               curr[val.name] = val.value;
             }
-          }),
+          }, []),
           headers: this.headers.reduce((curr, val) => {
             if (val && val.type) {
               curr[val.type] = val.value;
             }
-          })
+          }, [])
         })
         .then(val => {
           let data = val.data;

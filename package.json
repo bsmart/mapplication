@@ -8,13 +8,18 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@deck.gl/core": "^6.4.0",
+    "@deck.gl/layers": "^6.4.1",
+    "@turf/turf": "^5.1.6",
     "axios": "^0.18.0",
+    "codemirror": "^5.43.0",
     "debounce": "^1.2.0",
     "feather-icons": "^4.17.0",
     "lodash": "^4.17.11",
     "mapbox-gl": "^0.51.0",
     "tinycolor2": "^1.4.1",
     "vue": "^2.5.17",
+    "vue-codemirror": "^4.0.6",
     "vue-router": "^3.0.1",
     "vue-select": "^2.5.1",
     "vue-slider-component": "^2.8.3",

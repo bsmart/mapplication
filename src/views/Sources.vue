@@ -23,7 +23,7 @@
               <div
                 v-if="source.data"
                 class="ml-auto text-sm"
-              >{{ source.data.features.length }} features</div>
+              >{{ source.data.features ? source.data.features.length : source.data.length }} features</div>
             </div>
           </li>
         </ul>
