@@ -43,12 +43,11 @@ export default {
     export({ state }) {
       return new Promise((resolve, reject) => {
         try {
-          let list = [];
+          let ids = [];
           for (const l of state.list) {
             let { id, name, type, mapFunction, preFunction } = l;
-            // eslint-disable-next-line
             let { data, ...rest } = l.props;
-            list.push(id);
+            ids.push(id);
             localStorage.setItem(
               `layer:${id}`,
               JSON.stringify({
@@ -60,8 +59,9 @@ export default {
                 preFunction
               })
             );
+            localStorage.setItem(`layer:${id}:data`, JSON.stringify(data));
           }
-          localStorage.setItem(`layers`, JSON.stringify(list));
+          localStorage.setItem(`layers`, JSON.stringify(ids));
           resolve();
         } catch {
           reject();
