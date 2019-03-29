@@ -1,6 +1,5 @@
 <template>
   <section>
-    <Textfield title="ID" :id="id" :required="true" :value="id" @input="saveProps('id', $event)"/>
     <Checkbox title="Filled" id="filled" :value="filled" @input="saveProps('filled', $event)"/>
     <Checkbox title="Stroked" id="stroked" :value="stroked" @input="saveProps('stroked', $event)"/>
     <Range
@@ -120,17 +119,12 @@
       :value="getLineDashArray"
       @input="saveProps('getLineDashArray', $event)"
     />
-    <button
-      class="mx-2 my-2 px-3 py-2 bg-green-lighter text-green-darkest shadow rounded"
-      @click.prevent="saveProps();"
-    >Save properties</button>
   </section>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 
-import Textfield from "@/components/form/Textfield.vue";
 import Checkbox from "@/components/form/Checkbox.vue";
 import CodeWindow from "@/components/form/CodeWindow.vue";
 import Number from "@/components/form/Number.vue";
@@ -139,7 +133,6 @@ import Range from "@/components/form/Range.vue";
 export default {
   name: "GeoJsonLayer",
   components: {
-    Textfield,
     Checkbox,
     CodeWindow,
     Number,
@@ -168,8 +161,7 @@ export default {
     "getLineWidth",
     "getLineDashArray",
     "getElevation",
-    "lightSettings",
-    "id"
+    "lightSettings"
   ],
   computed: {
     ...mapState("layers", ["currentLayer"]),

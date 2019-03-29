@@ -32,17 +32,11 @@ export default {
 
       let reader = new FileReader();
 
-      function uintToString(arr) {
-        arr = new Int8Array(arr);
-        var encodedString = String.fromCharCode.apply(null, arr);
-        arr = null;
-        return encodedString;
-      }
-
       reader.onload = () => {
         if (reader.error == null) {
           offset += reader.result.length;
           this.$emit("chunk", reader.result);
+          this.$emit("progress", offset / file.size);
         } else {
           this.$emit("error", reader.error);
           return;
