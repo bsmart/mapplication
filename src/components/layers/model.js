@@ -1,4 +1,6 @@
 import uuid from "@/utilities/uuid";
+import * as turf from "@turf/turf";
+
 // eslint-disable-next-line
 import {
   ArcLayer as DeckArcLayer,
@@ -89,6 +91,7 @@ class GeoJsonLayer extends Layer {
 
   toDeckLayer() {
     let props = {
+      data: turf.featureCollection(this.props.data),
       // assign the functions
       getLineColor: new Function("data", this.props.getLineColor),
       getFillColor: new Function("data", this.props.getFillColor),

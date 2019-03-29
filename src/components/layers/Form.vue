@@ -1,6 +1,6 @@
 <template>
-  <section v-if="layer" class="-my-4 shadow-md rounded p-4 flex flex-col">
-    <h2 class="my-4">{{ layer.name }}</h2>
+  <section v-if="layer" class="shadow-md rounded p-4 flex flex-col">
+    <h2 class="mb-4">{{ layer.name }}</h2>
     <form>
       <Textfield
         title="Layer name"
@@ -11,65 +11,76 @@
         :value="layer.name"
         @input="updateName"
       />
+      <Textfield
+        title="Layer ID"
+        class="mb-3"
+        id="layerID"
+        :required="true"
+        placeholder="Enter the ID for this layer..."
+        :value="layer.props.id"
+        @input="updateID"
+      />
       <Select
+        title="Data source"
         class="my-3"
         :required="true"
         id="source"
         :value="source"
         @input="setSource"
         :options="sourceOptions"
-        title="Source"
       ></Select>
       <button
+        v-if="source"
         class="p-3 bg-green-lighter text-green-darkest shadow rounded"
         @click.prevent="reloadData"
       >Reload data</button>
-      <h3 class="my-4">Functions</h3>
-      <div>
-        <CodeWindow
-          title="Pre-process function"
-          id="mapFunction"
-          class="my-3"
-          :value="layer.preFunction"
-          @input="setPreFunction"
-          rows="5"
-        ></CodeWindow>
-        <div
-          v-if="preFunctionError"
-          class="my-3 p-3 shadow-md rounded-lg bg-red-lightest border-2 border-red-dark text-red-darkest"
-        >
-          <span
-            class="font-bold flex justify-center"
-          >{{ preFunctionError.toString() || 'Coding error' }}</span>
-        </div>
-      </div>
-      <div>
-        <CodeWindow
-          title="Map function"
-          id="mapFunction"
-          class="my-3"
-          :value="layer.mapFunction"
-          @input="setMapFunction"
-          rows="5"
-        ></CodeWindow>
-        <div
-          v-if="mapFunctionError"
-          class="my-3 p-3 shadow-md rounded-lg bg-red-lightest border-2 border-red-dark text-red-darkest"
-        >
-          <span
-            class="font-bold flex justify-center"
-          >{{ mapFunctionError.toString() || 'Coding error' }}</span>
-        </div>
-        <button
-          class="p-3 bg-green-lighter text-green-darkest shadow rounded"
-          @click.prevent="mapData"
-        >Apply map function</button>
-      </div>
       <DataTable
         v-if="layer.props.data"
         :table-data="layer.props.data.features ? layer.props.data.features : layer.props.data"
         :size="5"
       ></DataTable>
+      <fieldset>
+        <legend @click="showFunctions = !showFunctions">Functions</legend>
+        <div v-show="showFunctions">
+          <CodeWindow
+            title="Pre-process function"
+            id="mapFunction"
+            class="my-3"
+            :value="layer.preFunction"
+            @input="setPreFunction"
+            rows="5"
+          ></CodeWindow>
+          <div
+            v-if="preFunctionError"
+            class="my-3 p-3 shadow-md rounded-lg bg-red-lightest border-2 border-red-dark text-red-darkest"
+          >
+            <span
+              class="font-bold flex justify-center"
+            >{{ preFunctionError.toString() || 'Coding error' }}</span>
+          </div>
+          <CodeWindow
+            title="Map function"
+            id="mapFunction"
+            class="my-3"
+            :value="layer.mapFunction"
+            @input="setMapFunction"
+            rows="5"
+          ></CodeWindow>
+          <div
+            v-if="mapFunctionError"
+            class="my-3 p-3 shadow-md rounded-lg bg-red-lightest border-2 border-red-dark text-red-darkest"
+          >
+            <span
+              class="font-bold flex justify-center"
+            >{{ mapFunctionError.toString() || 'Coding error' }}</span>
+          </div>
+          <button
+            class="p-3 bg-green-lighter text-green-darkest shadow rounded"
+            @click.prevent="mapData"
+          >Apply map function</button>
+        </div>
+      </fieldset>
+
       <!-- :properties="[...Set(Object.keys(layer.props.data[0]))]" -->
       <component v-if="layer.props" :is="layer.type" v-bind="layer.props"/>
     </form>
@@ -105,6 +116,7 @@ export default {
   data() {
     return {
       source: "",
+      showFunctions: false,
       mapFunction: "",
       mapFunctionError: null,
       mapFunctionParsing: false
@@ -134,7 +146,7 @@ export default {
   methods: {
     ...mapActions("layers", ["saveLayer", "saveLayerMember", "deleteLayer"]),
     reloadData() {
-      this.layer.props.data = Object.assign({}, this.source.data);
+      this.layer.props.data = this.getSource(this.source).data;
       this.saveLayer({ key: this.currentLayer, layer: this.layer });
     },
     setPreFunction: _.debounce(function(value) {
@@ -208,11 +220,15 @@ export default {
     setSource(id) {
       this.source = id;
       // make a copy of the data
-      this.layer.props.data = Object.assign({}, this.getSource(id).data);
+      this.layer.props.data = this.getSource(id).data;
       this.saveLayer({ key: this.currentLayer, layer: this.layer });
     },
     updateName(name) {
       this.layer.name = name;
+      this.saveLayer({ key: this.currentLayer, layer: this.layer });
+    },
+    updateID(id) {
+      this.layer.props.id = id;
       this.saveLayer({ key: this.currentLayer, layer: this.layer });
     }
   }

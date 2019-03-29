@@ -41,24 +41,11 @@ export default {
         }
       });
     },
-    saveData({ commit }, data) {
-      commit("setData", { data });
+    saveData({ commit, state }, { data }) {
+      commit("setData", { key: state.currentSource, data });
     },
     addDataChunk({ commit }, chunk) {
       commit("addDataChunk", { chunk });
-    },
-    parseData({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        try {
-          const json = JSON.parse(state.dataString);
-          commit("setData", {
-            data: json
-          });
-          resolve();
-        } catch (err) {
-          reject(null);
-        }
-      });
     },
     deleteSource({ commit }, { key }) {
       commit("deleteSource", { key });
@@ -74,9 +61,14 @@ export default {
     setSource(state, { key, source }) {
       state.list[key] = source;
     },
-    setData(state, { data }) {
+    setData(state, { key, data }) {
       state.dataString = "";
-      state.list[state.currentSource].data = data;
+      state.list[key].data = data;
+    },
+    addData(state, { key, data }) {
+      state.list[key].data.features
+        ? state.list[key].data.features.push(data)
+        : state.list[key].data.push(data);
     },
     addDataChunk(state, { chunk }) {
       state.dataString += chunk;

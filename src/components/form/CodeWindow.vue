@@ -62,6 +62,7 @@ export default {
       options: {
         tabSize: 2,
         lineNumbers: true,
+        autoRefresh: true,
         mode: "text/javascript",
         theme: "dracula",
         extraKeys: {}
