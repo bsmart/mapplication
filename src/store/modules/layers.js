@@ -26,16 +26,25 @@ export default {
       commit("setCurrentLayer", { key });
     },
     saveLayer({ commit }, { key, layer }) {
-      commit("setLayer", { key, layer });
+      return new Promise(resolve => {
+        commit("setLayer", { key, layer });
+        resolve();
+      });
     },
     saveLayerMember({ commit, state }, { name, value }) {
       commit("setMember", { key: state.currentLayer, name, value });
     },
     saveProperties({ commit, state }, { props }) {
-      commit("setProperties", { key: state.currentLayer, props });
+      return new Promise(resolve => {
+        commit("setProperties", { key: state.currentLayer, props });
+        resolve();
+      });
     },
     saveData({ commit, state }, data) {
-      commit("setData", { key: state.currentLayer, data });
+      return new Promise(resolve => {
+        commit("setData", { key: state.currentLayer, data });
+        resolve();
+      });
     },
     deleteLayer({ commit }, { key }) {
       commit("deleteLayer", { key });

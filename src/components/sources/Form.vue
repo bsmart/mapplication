@@ -60,13 +60,14 @@
         @click.prevent="reduceData"
       >Apply reduce function</button>
     </form>
-    <div v-if="processing">
-      <span
-        class="rounded shadow-lg bg-blue-lightest text-blue-darkest border border-blue-darkest"
-      >...Processing</span>
+    <div v-if="progress" class="shadow w-full bg-fog-light">
+      <div
+        class="bg-blue-lighter text-xs leading-none py-1 text-center text-blue-darkest"
+        :style="{ width: progress * 100 + '%' }"
+      >{{ progress * 100 }}%</div>
     </div>
     <DataTable
-      v-if="source.data"
+      v-if="source.data && source.data.features ? source.data.features[0] : source.data[0]"
       :table-data="source.data.features ? source.data.features : source.data"
       :size="5"
     ></DataTable>
@@ -128,7 +129,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("sources", ["currentSource"]),
+    ...mapState("sources", ["currentSource", "progress"]),
     ...mapGetters({
       source: "sources/currentSource"
     })

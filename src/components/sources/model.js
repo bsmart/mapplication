@@ -10,7 +10,7 @@ export default class Source {
   constructor() {
     this.id = uuid.generate();
     this.name = "New source";
-    this.data = "";
+    this.data = [];
     this.mapFunction = "return value;";
     this.reduceFunction = "return acc;";
   }
