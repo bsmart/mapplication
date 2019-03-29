@@ -24,12 +24,22 @@
         to="/layers"
         exact-active-class="bg-black text-white"
       >Layers</router-link>
+      <Export></Export>
     </nav>
     <main class="relative pt-16 h-full">
       <router-view/>
     </main>
   </div>
 </template>
+
+<script>
+import Export from "@/components/persist/Export.vue";
+export default {
+  components: {
+    Export
+  }
+}
+</script>
 
 <style lang="scss">
 /* Google Fonts */
